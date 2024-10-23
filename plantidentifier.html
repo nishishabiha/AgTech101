@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<head>
+    <!-- Include Bootstrap CSS -->
+
+    <title>Plant Identifier</title>
+</head>
+
+<body>
+
+<header> 
+    
+    </header> 
+
+<main class="d-flex flex-column align-items-center justify-content-center" style="height: 100vh;">
+    <h1>Plant Identifier</h1>
+
+    <!-- Form for Uploading Files -->
+    <form action="#" method="post" enctype="multipart/form-data" class="d-flex flex-column align-items-center">
+        <input type="file" name="plantImage" required />
+        <button type="submit" class="btn btn-primary mt-3">Submit</button>
+    </form>
+
+    <!-- Add custom styling or background -->
+
+    
+</main>
+
+  <style>
+      body {
+          background-color: pink;
+          background-size: cover;
+      }
+
+    div{
+      background-color: white;
+    }
+  </style>
+
+  <div class="accordion" id="plantAccordion">
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingUpload">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseUpload" aria-expanded="true" aria-controls="collapseUpload">
+          Upload Image
+        </button>
+      </h2>
+      <div id="collapseUpload" class="accordion-collapse collapse show" aria-labelledby="headingUpload" data-bs-parent="#plantAccordion">
+        <div class="accordion-body">
+          <img src="https://fakeimg.pl/300x200/?text=Plant.id🪴&font=lobster" alt="Plant ID Placeholder" class="img-fluid">
+          <!-- Add image upload functionality here -->
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingInfo">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInfo" aria-expanded="false" aria-controls="collapseInfo">
+          Plant Information
+        </button>
+      </h2>
+      <div id="collapseInfo" class="accordion-collapse collapse" aria-labelledby="headingInfo" data-bs-parent="#plantAccordion">
+        <div class="accordion-body">
+          <!-- Add plant information content here -->
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingCare">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCare" aria-expanded="false" aria-controls="collapseCare">
+          Care Instructions
+        </button>
+      </h2>
+      <div id="collapseCare" class="accordion-collapse collapse" aria-labelledby="headingCare" data-bs-parent="#plantAccordion">
+        <div class="accordion-body">
+          <!-- Add care instructions content here -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+    
+
+<footer> <!-- Same Footer as Home Page --> </footer>
+
+<!-- Include Bootstrap JS -->
+</body>
+
+<script src="script.js"></script> 
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+</html>
