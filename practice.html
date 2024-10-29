@@ -1,0 +1,392 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My Website</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+
+
+<style>
+    body {
+        background-color: pink;
+        background-size: cover;
+    }
+
+  div{
+    background-color: white;
+  }
+</style>
+<body></body>
+  
+
+<div class="accordion" id="plantAccordion">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingUpload">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseUpload" aria-expanded="true" aria-controls="collapseUpload">
+        Upload Image
+      </button>
+    </h2>
+    <div id="collapseUpload" class="accordion-collapse collapse show" aria-labelledby="headingUpload" data-bs-parent="#plantAccordion">
+      <div class="accordion-body">
+        <img src="https://fakeimg.pl/300x200/?text=Plant.id🪴&font=lobster" alt="Plant ID Placeholder" class="img-fluid">
+        <!-- Add image upload functionality here -->
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingInfo">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInfo" aria-expanded="false" aria-controls="collapseInfo">
+        Plant Information
+      </button>
+    </h2>
+    <div id="collapseInfo" class="accordion-collapse collapse" aria-labelledby="headingInfo" data-bs-parent="#plantAccordion">
+      <div class="accordion-body">
+        <!-- Add plant information content here -->
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingCare">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCare" aria-expanded="false" aria-controls="collapseCare">
+        Care Instructions
+      </button>
+    </h2>
+    <div id="collapseCare" class="accordion-collapse collapse" aria-labelledby="headingCare" data-bs-parent="#plantAccordion">
+      <div class="accordion-body">
+        <!-- Add care instructions content here -->
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!--the outline for every code -->
+
+
+/* Plant Identifier API Section */
+.api-section {
+    padding: 5rem 5%;
+    background-color: var(--light-green);
+    color: white;
+}
+
+.api-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+    <!-- Plant Identifier API Section -->
+    <section class="api-section" id="plant-identifier">
+      <div class="api-container">
+          <h2>Plant Identifier API</h2>
+          <p>Upload an image to identify plants and get detailed information</p>
+          <!-- Add API integration here -->
+      </div>
+  </section>
+
+
+
+
+
+
+// let user= prompt("Enter Name");
+// <script src= "script.js"> </script>
+
+
+// const menuToggle= document.querySelector('.menu-toggle');
+// const navLinks= document.querySelector('#navbar ul');
+// console.log(menuTogle)
+
+// menuToggle.addEventListener('click', () => {
+//   navLinks.classList.toggle('active');
+
+// //Upload Buttons for plantIdentifier page
+                            
+// const uploadButton = document.getElementById('uploadButton');
+// const submitButton = document.getElementById('submitButton');
+
+
+function uploadAndIdentifyPlantID(){
+
+  //Retrieve the photo from the frontend
+  const photoInput= document.getElementById('photoInput');
+
+  //If no photo is selected, it alerts the user to upload a photo
+  if(photoInput.files.length === 0){
+    alert("Please select a photo to upload.");
+    return;
+  }
+
+  //Select the first file from the files array of an input element
+  const selectedFile = photoInput.files[0];
+
+  //Create a new file reader object to read the contents of the file
+  const reader = new FileReader();
+
+  //Set up the event handler for the onload for the file reader object. The onload event is triggered when the reading operation of the file has completed.
+  reader.onload = function (e) {
+
+    //Store the base64image in a variable
+    const base64Image = e.target.result;
+    console.log('base64Image',base64Image);
+
+    //Store all the variable for the API call
+    const apiKey= 'WveAAv1chOz01mCKC3XU7e35ChsCKKh3WyfmV2M3s4T2Vp3mLM';
+    const latitude = 49.207;
+    const longitude = 16.608;
+    const health = 'all';
+    const similarImages = true;
+    const details = 'common_names,url,description,taxonomy,rank,gbif_id,inaturalist_id,image,synonyms,edible_parts,watering,propagation_methods,treatment,cause'
+    const language= 'en';
+    const apiUrlPlantID = `https://plant.id/api/v3/identification?details=${details}&language=${language}`;
+
+    //Making the first API call with the base64image
+    axios.post(apiUrlPlantID, {
+      "images": [base64Image], 
+      "latitude": latitude,
+      "longitude": longitude,
+      "health": health,
+      "similar_images": similarImages,
+    }, {
+      headers: {
+        "Api-Key": apiKey,
+        "Content-Type": "application/json",
+      }
+    }) 
+    .then(function(response) {
+      console.log('Response from Plant ID API', response.data);
+      displayPlantIDInfo(response.data,base64Image);
+    })
+    //Error state of promise
+    .catch(function(error) {
+      alert(`Error:${error}❌❌❌`);
+      console.error("Error",error);
+    });
+  };
+
+  //Read the selected file as a data URL which is a base64 encoded reprentation of the file's content
+  reader.readAsDataURL(selectedFile);
+}
+
+function displayPlantIDInfo(plantIdResponse,base64Image){
+  // ======================================
+  //  VARIABLE TO STORE THE FIRST SUGGESTION
+  // ======================================
+
+  const plantIdClassification= plantIdResponse.result.classification;
+  const plantIdDisease= plantIDResponse.result.disease;
+  const plantIdIsHealthy= plantIdResponse.result.is_healthy;
+  const plantIdIsPlant= plantIdResponse.result.is_plant;
+
+    // ======================================
+    //  PLAN PREVIEW IMAGE
+    // ======================================
+    // Grab the preview image element from the front plantidentifier.html
+    const previewImage = document.getElementById('previewImage');
+    // Set the image HTML src attribute to the preview image we uploaded on the plantidentifier.html file
+    previewImage.src = base64Image;
+
+    // ======================================
+    //  PLANT NAME
+    // ======================================
+    
+    // Grab the HTML for the plant title container
+    const plantNameContainer = document.getElementById('plant-name-container');
+    //Create a new <p> tag element for the plant title
+    const plantNameElement= documen.createElement('p');
+    //Add the name of the plant to the innerHTML of the <p> tage we created
+    plantNameElement.innerHTML = '<strong> Name: </strong> ${plantIdClassification.suggestions[0].name}';
+
+    //Append the new div we created to the API result container that we grabbed from our HTML
+    plantNameContainer.appendChild(plantNameElement);
+
+
+    // ======================================
+    // SIMILAR IMAGE
+    // ======================================
+    // Grabe the similar image from the API Response
+    const plantsSimilarImages= plantIdClassification.suggestions[0].similar_images[0].url;
+    // Grab the HTML where the image will be placed
+    const similarImageHTML = document.getElementById('plant-similar-image');
+    // Set the image HTML src attribute to the similar image we grabbed from the API
+    similartImageHTML.src = plantSimilarImage;
+
+    // ======================================
+    // PROBABILITY
+    // ======================================
+    // Grab the probability score from the API response
+    const probablityOfPlant = plantIdClassification.suggestions[0].probability;
+    //Grab the HTML where the probability will be placed
+    const probabilityNameContainer= document.getElementById('probability-container');
+    // Create a new <p> tag element for the probability text
+    const probabilityNameElement = document.createElement('p');
+    // Add the probability text to the innerHTML of the new <p> tag we created
+    probabilityNameElement.innerHTML = '<strong> Probability: </strong> ${probablityOfPlant}';
+    //Append the new div we created to the probabilityNameContainer we we grabbed from our HTML
+    probabilityNameContainer.appendChild(probabilityNameElement);
+
+    // ======================================
+    // IS PLANT
+    // ======================================
+    // Grab the 'is plant'boolean value from the API response
+    const isPlant = plantIdIsPlant.binary;
+    //Grab the HTML where the plant boolean will be placed
+    const isPlantContainer = document.getElementById('isPlant-container');
+    // Create a new <p> tag element for the is plant boolean
+    const isPlantElement = document.createElement('p');
+    //Check if the boolean is true or false (is it a plant. if not, alert the user)
+    if(isPlant===false){
+      alert('The picture you submitted is not a plant ❌❌❌. Please try again!');
+      //Reload the page
+      window.location.reload();
+    }
+    //Add the boolean text to the innerHTML of the new <p> tag we created
+    isPlantElement.innerHTML = '<strong> Is plant: </strong> ${isPlant}';
+    //Append the new div we created to the isPlantContainer we we grabbed from our HTML
+    isPlantContainer.appendChild(isPlantElement);
+
+    // ======================================
+    // COMMON NAME
+    // ======================================
+    // Grab the first common name from the API response
+
+    const commonName = plantIdClassification.suggestions[0].details.common_names[0];
+    //Grab the HTML where the common name will be placed
+    const commonNameContainer = document.getElementById('common-name-container');
+    //Create a new <p> tag element for the common name text
+    const commonNameElement = document.createElement('p');
+    //Add the common name text to the innerHTML of the new <p> tag we created
+    commomNameElement.innerHTML = '<strong> Common name: </strong> ${commonName}';
+    //Append the new div we created to the commonNameContainer we created
+    commonNameContainer.appendChild(commonNameElement);
+    
+    // ======================================
+    // DESCRIPTION
+    // ======================================
+    //Grab value from the API response
+    const plantDescription = plantIdClassification.suggestions[0].details.description.value;
+    //Grab container from front end
+    const descriptionContainer = document.getElementById('description-container');
+    //Create a new <p> tag element for the description text
+    const descriptionElement= document.createElement('p');
+    //Add the description text to the innerHTML of the new <p> tag we created
+    descriptionElement.innerHTML = '<strong> Description: </strong> ${plantDescription}';
+    //Append the new div we created to the Container we grabbed from our HTML
+    descriptionContainer.appendChild(descriptionElement);
+
+    // ======================================
+    // PLANT HEALTH STATUS
+    // ======================================
+    //Grab value from the API response
+    const plantHealthStatus=plantIdIsHealthy.binary;
+    //Grab container from front end
+    const plantHealthStatusContainer = document.getElementById('plant-health-status-container');
+    //Create a new <p> tag element 
+    const plantHealthStatusElement = document.createElement('p');
+    //Add the plant health status text to the innerHTML of the new <p> tag we created
+    plantHealthStatusElement.innerHTML = '<strong> Is Plant Healthy: </strong> ${plantHealthStatus}';
+    //Append the new div we created to the plantHealthStatusContainer we grabbed from our HTML
+    plantHealthStatusContainer.appendChild(plantHealthStatusElement);
+
+    // ======================================
+    // SIMILAR IMAGE WITH DISEASE  
+    // ======================================
+    //Grab value from the API response
+    const plantSimilarImageWithDisease = plantIdDisease.suggestions[0].similar_images[0].url;
+    //Grab container from front end
+    const similarImageWithDiseaseHTML = document.getElementById('plant-similar-image-with-diseases');
+    //Set the image HTML src attribute to the similar image we grabbed from the API
+    similarImageWithDiseaseHTML.src = plantSimilarImageWithDisease;
+
+    // ======================================
+    // DISEASE NAME
+    // ======================================
+    // Grab value from the API response
+    const plantDiseaseName= plantIdDisease.suggestions[0].name;
+    //Grab container from front end HTML
+    const plantDiseaseNameContainer = document.getElementById('plant-disease-name-container');
+    //Create a new <p> tag element 
+    const plantDiseaseNameElement = document.createElement('p');
+    //Add the text to the innerHTML of the new <p> tag we created
+    plantDiseaseNameElement.innerHTML = '<strong>Disease Name: </strong> ${plantDiseaseName}';
+    //Append the new div we created to the Container we grabbed from our HTML
+    plantDiseaseNameContainer.appendChild(plantDiseaseNameElement);
+
+    // ===================================
+    // DISEASE PROBABILITY
+    // ===================================
+    // Grab value from API response
+    const plantDiseaseProbability = plantIdDisease.suggestions[0].probability;
+    // Grab container from the front end HTML
+    const plantDiseaseProbabilityContainer = document.getElementById('plant-disease-probability');
+    // create a new <p> tag element
+    const plantDiseaseProbabilityElement = document.createElement('p');
+    // add text to the innerHTML of the new <p> tag we created
+    plantDiseaseProbabilityElement.innerHTML = `<strong>Disease Probability:</strong> ${plantDiseaseProbability}`;
+    // append the new div we created to the container we grabed from our html
+    plantDiseaseProbabilityContainer.appendChild(plantDiseaseProbabilityElement);
+
+   
+    // ===================================
+    // DISEASE DESCRIPTION
+    // ===================================
+    // Grab value from API response
+    const plantDiseaseDescription = plantIdDisease.suggestions[0].details.description;
+    // Grab container from the front end HTML
+    const plantDiseaseDescriptionContainer = document.getElementById('plant-disease-description');
+    // create a new <p> tag element
+    const plantDiseaseDescriptionElement = document.createElement('p');
+    // add text to the innerHTML of the new <p> tag we created
+    plantDiseaseDescriptionElement.innerHTML = `<strong>Disease Description:</strong> ${plantDiseaseDescription}`;
+    // append the new div we created to the container we grabed from our html
+    plantDiseaseDescriptionContainer.appendChild(plantDiseaseDescriptionElement);
+    
+    // ===================================
+    // DISEASE TREATMENT [+ SAVE THE BEST FOR LAST USE A LOOP IN THE API FOR TREATMENTS]
+    // ===================================
+    // Grab value from API response
+    const plantDiseaseTreatment = plantIdDisease.suggestions[0].details.treatment;
+    // Grab container from the front end HTML
+    const plantDiseaseTreatmentContainer = document.getElementById('plant-disease-treatment');
+    // create a new <p> tag element
+    const plantDiseaseTreatmentElement = document.createElement('p');
+
+    // Do a check if the plant is dead and the object is empty we let the user know that there is no treatment available for dead plants
+    if (Object.keys(plantDiseaseTreatment).length === 0) {
+    // add text to the innerHTML of the new <p> tag we created
+    plantDiseaseTreatmentElement.innerHTML = `<strong>Disease Treatment:</strong> No treatment available`;
+    // append the new div we created to the container we grabed from our html
+    plantDiseaseTreatmentContainer.appendChild(plantDiseaseTreatmentElement);
+    }
+        // loop through the object and map keys to values
+        // then attach them to the HTML container
+        for (const key in plantDiseaseTreatment) {
+            // if the object has a key value pair
+            if (plantDiseaseTreatment.hasOwnProperty(key)) {
+                // create a variable and store the value of each key on each iteration
+                const plantDiseaseTreatmentValues = plantDiseaseTreatment[key].map(value => `<li>${value}</li>`).join('');
+                // create a variable that matches the key with the values and wrap them in HTML
+                const plantDiseaseTreatmentText = `<strong>Disease Treatment ${key}:</strong><ul>${plantDiseaseTreatmentValues}</ul>`;
+                // append the text of the key value pairs into the HTML container
+                plantDiseaseTreatmentContainer.innerHTML += plantDiseaseTreatmentText;
+            }
+        }
+    }
+
+    <!-- Include Bootstrap JS -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+crossorigin="anonymous"></script>
+<script src="script.js"></script> 
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+</body>
+    </html>

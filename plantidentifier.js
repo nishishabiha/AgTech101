@@ -1,3 +1,0 @@
-function handleSubmit() {
-    //Submit button
-  }
