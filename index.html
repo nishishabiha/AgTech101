@@ -28,6 +28,7 @@
         }
 
         /* Navigation */
+        /* Navigation */
         .navbar {
             background-color: var(--primary-green);
             padding: 1rem 5%;
@@ -37,23 +38,48 @@
             z-index: 1000;
         }
 
-        .nav-links {
-            display: flex;
-            justify-content: flex-end;
-            list-style: none;
-            gap:30px;
-        }
+     /* Add spacing between nav items */
+.nav-links {
+    display: flex;
+    justify-content: flex-end;
+    list-style: none;
+    gap: 30px;
+    margin: 0;
+    padding: 0 20px; /* Add padding on the sides */
+}
 
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
+/* Style individual nav items */
+.nav-links li {
+    padding: 10px 15px; /* Add padding around text */
+}
 
-        .nav-links a:hover {
-            color: var(--light-green);
+/* Style the links */
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    padding: 5px 10px; /* Add padding around link text */
+}
+
+/* Add hover effect */
+.nav-links a:hover {
+    color: var(--light-green);
+}
+
+/* Make navbar responsive */
+@media screen and (max-width: 768px) {
+    .nav-links {
+        gap: 15px; /* Reduce gap on smaller screens */
+        padding: 0 10px;
+    }
+}
+
+        /* Add some padding to body to prevent content from hiding under navbar */
+        body {
+            padding-top: 60px;
         }
+  
 
         /* Hero Section */
         .hero {
@@ -86,6 +112,7 @@
             background-color: var(--primary-green);
             color: white;
             margin-bottom: 2rem;
+            width: 100%;
         }
 
         .skills-container {
@@ -112,7 +139,7 @@
         .skill-category {
             background: rgba(255, 255, 255, 0.1);
             padding: 2rem;
-            border-radius: 15px;
+            border-radius: 30px;
             backdrop-filter: blur(10px);
             transition: transform 0.3s ease;
         }
@@ -373,7 +400,7 @@
                 <div class="case-study-content">
                     <h3>Red Clover Microgreens</h3>
                     <p>Implementation of sustainable farming techniques to grow red clovers to help support hormonal balance.</p>
-                    <a href="casestudy.html" class="btn">Learn More</a>
+                    <a href="casestudyfarm.html" class="btn">Learn More</a>
                 </div>
             </div>
 
@@ -382,7 +409,7 @@
                 <div class="case-study-content">
                     <h3>Plant Health API</h3>
                     <p> Developed a plant API to assist farm workers in early identification of plant diseases and facilitate treatment measures.</p>
-                    <a href="#" class="btn">Learn More</a>
+                    <a href="casestudyplant.html" class="btn">Learn More</a>
                 </div>
             </div>
 
@@ -391,7 +418,7 @@
                 <div class="case-study-content">
                     <h3>Urban Oasis AI</h3>
                     <p>Created an AI solution to help users determine the best indoor farm system to build in NYC based on budget constraints, space, and time.</p>
-                    <a href="#" class="btn">Learn More</a>
+                    <a href="casestudyai.html" class="btn">Learn More</a>
                 </div>
             </div>
 
@@ -400,7 +427,7 @@
                 <div class="case-study-content">
                     <h3>Community Garden Bench</h3>
                     <p>Designed and built a sustainable community garden bench that promotes social interaction and urban agriculture.</p>
-                    <a href="#" class="btn">Learn More</a>
+                    <a href="casestudybuild.html" class="btn">Learn More</a>
                 </div>
             </div>
         </div>

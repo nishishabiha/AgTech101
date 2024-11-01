@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Garden Build</title>
+    
+    <style> 
+        /* Define CSS variables */
+        :root {
+            --primary-green: #4a7c59;  /* You can change this color */
+            --light-green: #81C784;    /* You can change this color */
+        }
+
+        /* Reset default margin and padding */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Navigation */
+        .navbar {
+            background-color: var(--primary-green);
+            padding: 1rem 5%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+     /* Add spacing between nav items */
+.nav-links {
+    display: flex;
+    justify-content: flex-end;
+    list-style: none;
+    gap: 30px;
+    margin: 0;
+    padding: 0 20px; /* Add padding on the sides */
+}
+
+/* Style individual nav items */
+.nav-links li {
+    padding: 10px 15px; /* Add padding around text */
+}
+
+/* Style the links */
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    padding: 5px 10px; /* Add padding around link text */
+}
+
+/* Add hover effect */
+.nav-links a:hover {
+    color: var(--light-green);
+}
+
+/* Make navbar responsive */
+@media screen and (max-width: 768px) {
+    .nav-links {
+        gap: 15px; /* Reduce gap on smaller screens */
+        padding: 0 10px;
+    }
+}
+
+        /* Add some padding to body to prevent content from hiding under navbar */
+        body {
+            padding-top: 60px;
+        }
+    </style>
+</head>
+
+
+
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#case-studies">Case Studies</a></li>
+            <li><a href="plantidentifier.html">Plant API</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+
+
+    <img src="Build.jpg"width="500" height="auto">
+    <img src="Build2.jpg"width="500" height="auto">
+    <img src="Build3.jpg"width="500" height="auto">
+
+</body>
+</html>
