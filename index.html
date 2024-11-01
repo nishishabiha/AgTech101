@@ -41,7 +41,7 @@
             display: flex;
             justify-content: flex-end;
             list-style: none;
-            gap: 2rem;
+            gap:30px;
         }
 
         .nav-links a {
@@ -58,8 +58,8 @@
         /* Hero Section */
         .hero {
             height: 100vh;
-            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-                        url('/api/placeholder/1920/1080') center/cover;
+            background: 
+                url('Hydroponics.jpeg') center/cover;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -165,13 +165,16 @@
             margin: 0 auto;
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 2rem;
+            justify-content: space-between;
+            gap: 30px;
+            row-gap:10px;
             padding: 0 1rem;
         }
 
         .case-study-card {
             background: white;
-            border-radius: 10px;
+            margin: 15px;
+            border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease;
@@ -307,7 +310,7 @@
             <li><a href="#home">Home</a></li>
             <li><a href="#skills">Skills</a></li>
             <li><a href="#case-studies">Case Studies</a></li>
-            <li><a href="#plantAPI">Plant API</a></li>
+            <li><a href="plantidentifier.html">Plant API</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
     </nav>
@@ -316,7 +319,7 @@
     <section class="hero" id="home">
         <div class="hero-content">
             <h1>I'm Nishi.</h1>
-            <p>Passionate about exploring sustainable real estate development practices and agricultural technology</p>
+            <p>Exploring sustainable agriculture through design, technology, and innovation</p>
         </div>
     </section>
 
@@ -364,13 +367,13 @@
     <!-- Case Studies Section -->
     <section class="case-studies" id="case-studies">
         <h2> Case Studies</h2>
-        <div class="grid">
+        <div class="grid" >
             <div class="case-study-card">
                 <div class="case-study-img"></div>
                 <div class="case-study-content">
                     <h3>Red Clover Microgreens</h3>
                     <p>Implementation of sustainable farming techniques to grow red clovers to help support hormonal balance.</p>
-                    <a href="#" class="btn">Learn More</a>
+                    <a href="casestudy.html" class="btn">Learn More</a>
                 </div>
             </div>
 
